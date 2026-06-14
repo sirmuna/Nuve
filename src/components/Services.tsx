@@ -1,5 +1,3 @@
-import { desc } from "framer-motion/client";
-
 function Services() {
   const services = [
     {

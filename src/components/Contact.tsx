@@ -6,15 +6,20 @@ function Contact() {
     email: "",
     phone: "",
     service: "",
+    brand: "",
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(form);
     setSubmitted(true);
@@ -108,34 +113,34 @@ function Contact() {
                 />
               </div>
             </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-[0.65rem] tracking-widest uppercase text-muted font-medium">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="you@company.com"
-                  value={form.email}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 bg-cream border border-warm text-sm font-light text-ink outline-none focus:border-accent transition-colors"
-                  required
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <label className="text-[0.65rem] tracking-widest uppercase text-muted font-medium">
-                  Company / Brand
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your brand name"
-                  value={form.brand}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 bg-cream border border-warm text-sm font-light text-ink outline-none focus:border-accent transition-colors"
-                  required
-                />
-              </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-[0.65rem] tracking-widest uppercase text-muted font-medium">
+                Email Address
+              </label>
+              <input
+                type="email"
+                name="email"
+                placeholder="you@company.com"
+                value={form.email}
+                onChange={handleChange}
+                className="w-full px-4 py-3 bg-cream border border-warm text-sm font-light text-ink outline-none focus:border-accent transition-colors"
+                required
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-[0.65rem] tracking-widest uppercase text-muted font-medium">
+                Company / Brand
+              </label>
+              <input
+                type="text"
+                name="name"
+                placeholder="Your brand name"
+                value={form.brand}
+                onChange={handleChange}
+                className="w-full px-4 py-3 bg-cream border border-warm text-sm font-light text-ink outline-none focus:border-accent transition-colors"
+                required
+              />
+            </div>
             {/* SERVICE OF INTEREST DROPDOWN */}
             <div className="flex flex-col gap-2">
               <label className="text-[0.65rem] tracking-widest uppercase text-muted font-medium">
@@ -164,7 +169,7 @@ function Contact() {
               </select>
             </div>
             {/* ESTIMATED BUDGET DROPDOWN */}
-              <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2">
               <label className="text-[0.65rem] tracking-widest uppercase text-muted font-medium">
                 Estimated Budget
               </label>
@@ -196,14 +201,15 @@ function Contact() {
                 placeholder="Describe what you're building, where you are now, and where you want to go..."
                 value={form.message}
                 onChange={handleChange}
-                rows="5"
+                rows={5}
                 className="w-full px-4 py-3 bg-cream border border-warm text-sm font-light text-ink outline-none focus:border-accent transition-colors resize-y min-h-[130px]"
                 required
               ></textarea>
             </div>
 
             <p className="text-xs text-muted font-light leading-relaxed">
-              We respond to all enquiries within 48 hours. Your information is never shared with third parties.
+              We respond to all enquiries within 48 hours. Your information is
+              never shared with third parties.
             </p>
             <button
               type="submit"
@@ -211,7 +217,6 @@ function Contact() {
             >
               Send Enquiry
             </button>
-
           </form>
         )}
       </div>
