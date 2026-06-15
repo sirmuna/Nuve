@@ -1,3 +1,6 @@
+import Text from "@/components/Text";
+import { motion } from "framer-motion";
+
 function Clients() {
   const clients = [
     {
@@ -21,35 +24,91 @@ function Clients() {
   ];
 
   return (
-    <section
+    <motion.section
       id="clients"
       className="bg-ink text-cream px-6 md:px-16 py-16 md:py-28"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6 }}
     >
-      <p className="text-xs font-medium tracking-[0.3em] uppercase text-accent/80 mb-4">
+      <Text
+        as="p"
+        font="sans"
+        size="xs"
+        weight="medium"
+        tracking="custom-0_3em"
+        uppercase
+        color="accent-80"
+        className="mb-4"
+      >
         What Clients Say
-      </p>
-      <h2 className="font-serif text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-tight max-w-2xl">
+      </Text>
+      <Text
+        as="h2"
+        font="serif"
+        size="3xl"
+        weight="light"
+        leading="tight"
+        color="cream"
+        className="sm:text-3xl md:text-4xl lg:text-5xl max-w-2xl"
+      >
         Results that speak
         <br />
         for themselves.
-      </h2>
+      </Text>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mt-12 md:mt-16">
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mt-12 md:mt-16"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
         {clients.map((client, i) => (
-          <div key={i} className="border-t border-cream/10 pt-6 md:pt-8">
-            <p className="font-serif text-base md:text-lg font-light italic leading-[1.8] tracking-wide text-cream/85 mb-6 md:mb-8">
+          <motion.div
+            key={i}
+            className="border-t border-cream/10 pt-6 md:pt-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.4, delay: i * 0.15 }}
+          >
+            <Text
+              as="p"
+              font="serif"
+              size="base"
+              weight="light"
+              italic
+              leading="custom-1_8"
+              tracking="wide"
+              color="cream-85"
+              className="md:text-lg mb-6 md:mb-8"
+            >
               "{client.quote}"
-            </p>
-            <p className="text-[0.7rem] tracking-widest uppercase text-accent">
+            </Text>
+            <Text
+              as="p"
+              size="custom-0_7rem"
+              tracking="widest"
+              uppercase
+              color="accent"
+            >
               {client.author}
-            </p>
-            <p className="text-[0.7rem] text-cream/35 tracking-wider mt-1">
+            </Text>
+            <Text
+              as="p"
+              size="custom-0_7rem"
+              color="cream-35"
+              tracking="wider"
+              className="mt-1"
+            >
               {client.role}
-            </p>
-          </div>
+            </Text>
+          </motion.div>
         ))}
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 }
 

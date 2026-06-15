@@ -1,6 +1,6 @@
 import Hero from './Hero'
-import Philosophy from './Philosophy'
 import Marquee from './Marquee'
+import Philosophy from './Philosophy'
 import Services from './Services'
 import Clients from './Clients'
 import Contact from './Contact'
@@ -10,8 +10,8 @@ function Home() {
   return (
     <main>
       <Hero />
-      <Philosophy />
       <Marquee />
+      <Philosophy />
       <Services />
       <Clients />
       <Contact />

@@ -1,152 +1,276 @@
+import Text from "@/components/Text";
+import { motion } from "framer-motion";
+
 function Footer() {
   return (
     <>
-      <footer className="bg-ink px-6 md:px-16 py-12 md:py-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 border-t border-accent/20">
+      <motion.footer
+        className="bg-ink px-6 md:px-16 py-12 md:py-16 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 border-t border-accent/20"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="sm:col-span-2 md:col-span-2 lg:col-span-1 border-x">
-          <div className="font-serif text-3xl md:text-2xl font-semibold tracking-[0.25em] text-cream mb-3 md:mb-4">
+          <Text
+            as="div"
+            font="serif"
+            size="3xl"
+            weight="semibold"
+            tracking="custom-0_25em"
+            color="cream"
+            className="md:text-2xl mb-3 md:mb-4"
+          >
             NUVÉ
-          </div>
-          <p className="font-serif italic font-light text-cream/40 leading-relaxed max-w-xs">
+          </Text>
+          <Text
+            as="p"
+            font="serif"
+            italic
+            weight="light"
+            color="cream-40"
+            leading="relaxed"
+            className="max-w-xs"
+          >
             A brand studio for the ones who <br /> refuse to be ordinary.
-          </p>
+          </Text>
         </div>
 
         <div>
-          <p className="text-[0.65rem] tracking-[0.25em] uppercase text-accent font-medium mb-4 md:mb-6 text-center">
+          <Text
+            as="p"
+            size="custom-0_65rem"
+            tracking="custom-0_25em"
+            uppercase
+            color="accent"
+            weight="medium"
+            className="mb-4 md:mb-6 text-center"
+          >
             Studio
-          </p>
+          </Text>
           <ul className="flex flex-col gap-3 list-none text-center">
             <li>
-              <a
+              <Text
+                as="a"
                 href="#philosophy"
-                className="text-sm font-light text-cream/50 hover:text-cream transition-colors"
+                size="sm"
+                weight="light"
+                color="cream-50"
+                className="hover:text-cream transition-colors"
               >
                 Philosophy
-              </a>
+              </Text>
             </li>
             <li>
-              <a
+              <Text
+                as="a"
                 href="#services"
-                className="text-sm font-light text-cream/50 hover:text-cream transition-colors"
+                size="sm"
+                weight="light"
+                color="cream-50"
+                className="hover:text-cream transition-colors"
               >
                 Our Team
-              </a>
+              </Text>
             </li>
             <li>
-              <a
+              <Text
+                as="a"
                 href="#testimonials"
-                className="text-sm font-light text-cream/50 hover:text-cream transition-colors"
+                size="sm"
+                weight="light"
+                color="cream-50"
+                className="hover:text-cream transition-colors"
               >
                 Case Studies
-              </a>
+              </Text>
             </li>
             <li>
-              <a
+              <Text
+                as="a"
                 href="#"
-                className="text-sm font-light text-cream/50 hover:text-cream transition-colors"
+                size="sm"
+                weight="light"
+                color="cream-50"
+                className="hover:text-cream transition-colors"
               >
                 Press
-              </a>
+              </Text>
             </li>
           </ul>
         </div>
         <div>
-          <p className="text-[0.65rem] tracking-[0.25em] uppercase text-accent font-medium mb-4 md:mb-6 text-center">
+          <Text
+            as="p"
+            size="custom-0_65rem"
+            tracking="custom-0_25em"
+            uppercase
+            color="accent"
+            weight="medium"
+            className="mb-4 md:mb-6 text-center"
+          >
             Services
-          </p>
+          </Text>
           <ul className="flex flex-col gap-3 list-none text-center">
             <li>
-              <a
+              <Text
+                as="a"
                 href="#philosophy"
-                className="text-sm font-light text-cream/50 hover:text-cream transition-colors"
+                size="sm"
+                weight="light"
+                color="cream-50"
+                className="hover:text-cream transition-colors"
               >
                 About
-              </a>
+              </Text>
             </li>
             <li>
-              <a
+              <Text
+                as="a"
                 href="#services"
-                className="text-sm font-light text-cream/50 hover:text-cream transition-colors"
+                size="sm"
+                weight="light"
+                color="cream-50"
+                className="hover:text-cream transition-colors"
               >
                 Services
-              </a>
+              </Text>
             </li>
             <li>
-              <a
+              <Text
+                as="a"
                 href="#testimonials"
-                className="text-sm font-light text-cream/50 hover:text-cream transition-colors"
+                size="sm"
+                weight="light"
+                color="cream-50"
+                className="hover:text-cream transition-colors"
               >
                 Reviews
-              </a>
+              </Text>
             </li>
             <li>
-              <a
+              <Text
+                as="a"
                 href="#"
-                className="text-sm font-light text-cream/50 hover:text-cream transition-colors"
+                size="sm"
+                weight="light"
+                color="cream-50"
+                className="hover:text-cream transition-colors"
               >
                 Consulting
-              </a>
+              </Text>
             </li>
           </ul>
         </div>
         <div className="border-x-2">
-          <p className="text-[0.65rem] tracking-[0.25em] uppercase text-accent font-medium mb-4 md:mb-6 text-center">
+          <Text
+            as="p"
+            size="custom-0_65rem"
+            tracking="custom-0_25em"
+            uppercase
+            color="accent"
+            weight="medium"
+            className="mb-4 md:mb-6 text-center"
+          >
             Connect
-          </p>
+          </Text>
           <ul className="flex flex-col gap-3 list-none text-center">
             <li>
-              <a
+              <Text
+                as="a"
                 href="#"
-                className="text-sm font-light text-cream/50 hover:text-cream transition-colors"
+                size="sm"
+                weight="light"
+                color="cream-50"
+                className="hover:text-cream transition-colors"
               >
                 Instagram
-              </a>
+              </Text>
             </li>
             <li>
-              <a
+              <Text
+                as="a"
                 href="#"
-                className="text-sm font-light text-cream/50 hover:text-cream transition-colors"
+                size="sm"
+                weight="light"
+                color="cream-50"
+                className="hover:text-cream transition-colors"
               >
                 Behance
-              </a>
+              </Text>
             </li>
             <li>
-              <a
+              <Text
+                as="a"
                 href="#"
-                className="text-sm font-light text-cream/50 hover:text-cream transition-colors"
+                size="sm"
+                weight="light"
+                color="cream-50"
+                className="hover:text-cream transition-colors"
               >
                 LinkedIn
-              </a>
+              </Text>
             </li>
             <li>
-              <a
+              <Text
+                as="a"
                 href="#contact"
-                className="text-sm font-light text-cream/50 hover:text-cream transition-colors"
+                size="sm"
+                weight="light"
+                color="cream-50"
+                className="hover:text-cream transition-colors"
               >
                 Contact
-              </a>
+              </Text>
             </li>
           </ul>
         </div>
-      </footer>
+      </motion.footer>
 
-      <div className="bg-ink px-6 md:px-16 py-6 flex flex-col sm:flex-row justify-between items-center gap-4 border-t border-cream/[0.07]">
-        <p className="text-[0.7rem] text-cream/25 tracking-wider">
+      <div
+        className="px-6 md:px-16 py-6 flex flex-col sm:flex-row justify-between items-center gap-4"
+        style={{
+          backgroundColor: "#0f0f0e",
+          borderTop: "1px solid rgba(248, 244, 238, 0.07)",
+        }}
+      >
+        <Text as="p" size="xs" color="cream-50" tracking="wider">
           © 2026 NUVÉ Studio. All rights reserved
-        </p>
-        <div className="flex gap-6">
-          <a
+        </Text>
+        <div className="flex gap-6 items-center">
+          <Text
+            as="a"
             href="#"
-            className="text-[0.7rem] tracking-widest uppercase text-cream/25 hover:text-accent transition-colors"
+            size="xs"
+            tracking="widest"
+            uppercase
+            color="cream-50"
+            className="hover:text-accent transition-colors"
           >
             Privacy
-          </a>
-          <a
+          </Text>
+          <Text
+            as="a"
             href="#"
-            className="text-[0.7rem] tracking-widest uppercase text-cream/25 hover:text-accent transition-colors"
+            size="xs"
+            tracking="widest"
+            uppercase
+            color="cream-50"
+            className="hover:text-accent transition-colors"
           >
             Terms
-          </a>
+          </Text>
+          <Text
+            as="a"
+            href="#"
+            size="xs"
+            tracking="widest"
+            uppercase
+            color="cream-50"
+            className="hover:text-accent transition-colors"
+          >
+            Cookies
+          </Text>
         </div>
       </div>
     </>

@@ -1,4 +1,7 @@
 import { useState } from "react";
+import Text from "@/components/Text";
+import Button from "@/components/Button";
+import { motion } from "framer-motion";
 
 function Contact() {
   const [form, setForm] = useState({
@@ -26,68 +29,175 @@ function Contact() {
   };
 
   return (
-    <section
+    <motion.section
       id="contact"
       className="bg-white grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-start px-6 md:px-16 py-16 md:py-28"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6 }}
     >
-      <div>
-        <p className="text-xs font-medium tracking-[0.3em] uppercase text-accent mb-4">
+      <motion.div
+        initial={{ opacity: 0, x: -30 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6 }}
+      >
+        <Text
+          as="p"
+          font="sans"
+          size="xs"
+          weight="medium"
+          tracking="custom-0_3em"
+          uppercase
+          color="accent"
+          className="mb-4"
+        >
           Get in Touch
-        </p>
-        <h2 className="font-serif text-3xl sm:text-3xl md:text-4xl lg:text-5xl font-light leading-tight mb-4 md:mb-6 pr-10">
+        </Text>
+        <Text
+          as="h2"
+          font="serif"
+          size="3xl"
+          weight="light"
+          leading="tight"
+          color="ink"
+          className="sm:text-3xl md:text-4xl lg:text-5xl mb-4 md:mb-6 pr-10"
+        >
           Ready to build something{" "}
-          <em className="italic text-accent">worth remembering?</em>
-        </h2>
-        <p className="text-sm md:text-base font-light leading-relaxed text-muted mb-8 md:mb-12 max-w-md">
+          <Text as="em" italic color="accent">
+            worth remembering?
+          </Text>
+        </Text>
+        <Text
+          as="p"
+          size="sm"
+          weight="light"
+          leading="relaxed"
+          color="muted"
+          className="md:text-base mb-8 md:mb-12 max-w-md"
+        >
           Whether you're starting from scratch or refining what exists, we'd
           like to hear about your challenge. Projects typically begin within 3–4
           weeks of enquiry.
-        </p>
+        </Text>
         <div className="flex flex-col gap-6">
           <div>
-            <p className="text-[0.65rem] tracking-[0.25em] uppercase text-accent font-medium mb-1">
+            <Text
+              as="p"
+              size="custom-0_65rem"
+              tracking="custom-0_25em"
+              uppercase
+              color="accent"
+              weight="medium"
+              className="mb-1"
+            >
               Email
-            </p>
-            <p className="font-serif text-base md:text-lg font-light text-ink">
+            </Text>
+            <Text
+              as="p"
+              font="serif"
+              size="base"
+              weight="light"
+              color="ink"
+              className="md:text-lg"
+            >
               studio@nuve.co
-            </p>
+            </Text>
           </div>
           <div>
-            <p className="text-[0.65rem] tracking-[0.25em] uppercase text-accent font-medium mb-1">
+            <Text
+              as="p"
+              size="custom-0_65rem"
+              tracking="custom-0_25em"
+              uppercase
+              color="accent"
+              weight="medium"
+              className="mb-1"
+            >
               Phone
-            </p>
-            <p className="font-serif text-base md:text-lg font-light text-ink">
+            </Text>
+            <Text
+              as="p"
+              font="serif"
+              size="base"
+              weight="light"
+              color="ink"
+              className="md:text-lg"
+            >
               +1 (212) 555 0194
-            </p>
+            </Text>
           </div>
           <div>
-            <p className="text-[0.65rem] tracking-[0.25em] uppercase text-accent font-medium mb-1">
+            <Text
+              as="p"
+              size="custom-0_65rem"
+              tracking="custom-0_25em"
+              uppercase
+              color="accent"
+              weight="medium"
+              className="mb-1"
+            >
               Location
-            </p>
-            <p className="font-serif text-base md:text-lg font-light text-ink">
+            </Text>
+            <Text
+              as="p"
+              font="serif"
+              size="base"
+              weight="light"
+              color="ink"
+              className="md:text-lg"
+            >
               New York · Lagos · London
-            </p>
+            </Text>
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      <div>
+      <motion.div
+        initial={{ opacity: 0, x: 30 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
         {submitted ? (
-          <div className="p-6 bg-accent/8 border border-accent/30 text-center">
-            <p className="font-serif italic text-base md:text-lg text-accent-dark">
+          <motion.div
+            className="p-6 bg-accent/8 border border-accent/30 text-center"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4 }}
+          >
+            <Text
+              as="p"
+              font="serif"
+              italic
+              size="base"
+              color="accent-dark"
+              className="md:text-lg"
+            >
               Thank you — we'll be in touch soon.
-            </p>
-          </div>
+            </Text>
+          </motion.div>
         ) : (
-          <form
+          <motion.form
             onSubmit={handleSubmit}
             className="flex flex-col gap-5 md:gap-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.3 }}
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
               <div className="flex flex-col gap-2">
-                <label className="text-[0.65rem] tracking-widest uppercase text-muted font-medium">
+                <Text
+                  as="label"
+                  size="custom-0_65rem"
+                  tracking="widest"
+                  uppercase
+                  color="muted"
+                  weight="medium"
+                >
                   First Name
-                </label>
+                </Text>
                 <input
                   type="text"
                   name="name"
@@ -99,9 +209,16 @@ function Contact() {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <label className="text-[0.65rem] tracking-widest uppercase text-muted font-medium">
+                <Text
+                  as="label"
+                  size="custom-0_65rem"
+                  tracking="widest"
+                  uppercase
+                  color="muted"
+                  weight="medium"
+                >
                   Last Name
-                </label>
+                </Text>
                 <input
                   type="text"
                   name="name"
@@ -114,9 +231,16 @@ function Contact() {
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <label className="text-[0.65rem] tracking-widest uppercase text-muted font-medium">
+              <Text
+                as="label"
+                size="custom-0_65rem"
+                tracking="widest"
+                uppercase
+                color="muted"
+                weight="medium"
+              >
                 Email Address
-              </label>
+              </Text>
               <input
                 type="email"
                 name="email"
@@ -128,9 +252,16 @@ function Contact() {
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label className="text-[0.65rem] tracking-widest uppercase text-muted font-medium">
+              <Text
+                as="label"
+                size="custom-0_65rem"
+                tracking="widest"
+                uppercase
+                color="muted"
+                weight="medium"
+              >
                 Company / Brand
-              </label>
+              </Text>
               <input
                 type="text"
                 name="name"
@@ -143,9 +274,16 @@ function Contact() {
             </div>
             {/* SERVICE OF INTEREST DROPDOWN */}
             <div className="flex flex-col gap-2">
-              <label className="text-[0.65rem] tracking-widest uppercase text-muted font-medium">
+              <Text
+                as="label"
+                size="custom-0_65rem"
+                tracking="widest"
+                uppercase
+                color="muted"
+                weight="medium"
+              >
                 Service OF INTEREST
-              </label>
+              </Text>
               <select
                 name="service"
                 value={form.service}
@@ -170,9 +308,16 @@ function Contact() {
             </div>
             {/* ESTIMATED BUDGET DROPDOWN */}
             <div className="flex flex-col gap-2">
-              <label className="text-[0.65rem] tracking-widest uppercase text-muted font-medium">
+              <Text
+                as="label"
+                size="custom-0_65rem"
+                tracking="widest"
+                uppercase
+                color="muted"
+                weight="medium"
+              >
                 Estimated Budget
-              </label>
+              </Text>
               <select
                 name="service"
                 value={form.service}
@@ -193,9 +338,16 @@ function Contact() {
               </select>
             </div>
             <div className="flex flex-col gap-2">
-              <label className="text-[0.65rem] tracking-widest uppercase text-muted font-medium">
+              <Text
+                as="label"
+                size="custom-0_65rem"
+                tracking="widest"
+                uppercase
+                color="muted"
+                weight="medium"
+              >
                 Tell us about your project
-              </label>
+              </Text>
               <textarea
                 name="message"
                 placeholder="Describe what you're building, where you are now, and where you want to go..."
@@ -207,20 +359,23 @@ function Contact() {
               ></textarea>
             </div>
 
-            <p className="text-xs text-muted font-light leading-relaxed">
+            <Text
+              as="p"
+              size="xs"
+              color="muted"
+              weight="light"
+              leading="relaxed"
+            >
               We respond to all enquiries within 48 hours. Your information is
               never shared with third parties.
-            </p>
-            <button
-              type="submit"
-              className="self-start px-10 py-4 bg-ink text-cream text-xs font-medium tracking-widest uppercase hover:bg-accent transition-colors"
-            >
+            </Text>
+            <Button type="submit" size="lg" className="self-start">
               Send Enquiry
-            </button>
-          </form>
+            </Button>
+          </motion.form>
         )}
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 }
 
