@@ -1,27 +1,56 @@
+import Text from '@/components/Text';
+
 function Hero() {
   return (
     <section className="min-h-screen grid grid-cols-1 md:grid-cols-2 relative overflow-hidden">
+      
+      {/* Left — content */}
       <div className="flex flex-col justify-center px-6 md:pl-16 pr-50 pt-32 md:pt-40 pb-12 md:pb-24 relative z-10 bg-cream">
-        <p
-          className="font-sans text-xs font-medium tracking-[0.20em] uppercase text-accent mb-4 md:mb-6 opacity-0 animate-fade-up"
+        
+        <Text
+          as="p"
+          font="sans"
+          size="xs"
+          weight="medium"
+          tracking="custom-0_20em"
+          uppercase
+          color="accent"
+          className="mb-4 md:mb-6 opacity-0 animate-fade-up"
           style={{ animationDelay: "0.2s" }}
         >
           Est. 2019 · Premium Brand Studio
-        </p>
-        <h1
-          className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight leading-[1.2] text-ink mb-6 md:mb-8 opacity-0 animate-fade-up"
+        </Text>
+
+        <Text
+          as="h1"
+          font="serif"
+          size="4xl"
+          weight="extralight"
+          leading="custom-1_2"
+          color="ink"
+          className="sm:text-5xl md:text-6xl lg:text-7xl mb-6 md:mb-8 opacity-0 animate-fade-up"
           style={{ animationDelay: "0.4s" }}
         >
-          Crafted for those who <em className="italic text-accent">dare</em> to
-          be remembered.
-        </h1>
-        <p
-          className="text-sm md:text-base font-light leading-relaxed text-muted max-w-sm mb-8 md:mb-12 opacity-0 animate-fade-up"
+          Crafted for those who{" "}
+          <Text as="em" italic color="accent">
+            dare
+          </Text>{" "}
+          to be remembered.
+        </Text>
+
+        <Text
+          as="p"
+          size="sm"
+          weight="light"
+          leading="relaxed"
+          color="muted"
+          className="md:text-base max-w-sm mb-8 md:mb-12 opacity-0 animate-fade-up"
           style={{ animationDelay: "0.6s" }}
         >
           We create brands that feel inevitable — identities so precisely
           crafted, your audience cannot imagine the world without them.
-        </p>
+        </Text>
+
         <div
           className="flex flex-wrap gap-4 md:gap-6 items-center opacity-0 animate-fade-up"
           style={{ animationDelay: "0.8s" }}
@@ -44,6 +73,7 @@ function Hero() {
         </div>
       </div>
 
+      {/* Right — visual */}
       <div className="relative overflow-hidden bg-ink h-[60vw] md:h-auto flex items-center justify-center">
         <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a18] via-[#2d2a24] to-[#1a1815]"></div>
 
@@ -53,20 +83,36 @@ function Hero() {
         >
           <div className="absolute top-4 left-4 -right-4 -bottom-4 border border-accent/15"></div>
           <div className="absolute inset-[20px] md:inset-[30px] bg-accent opacity-10"></div>
-          <span className="absolute -bottom-10 md:-bottom-12 left-0 font-serif text-4xl md:text-6xl italic text-accent/25 whitespace-nowrap">
+          <Text
+            as="span"
+            font="serif"
+            size="4xl"
+            italic
+            color="accent-80"
+            className="absolute -bottom-10 md:-bottom-12 left-0 md:text-6xl whitespace-nowrap opacity-25"
+          >
             nuvé
-          </span>
+          </Text>
         </div>
-              <div
-        className="hidden md:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2 opacity-0 animate-fade-in"
-        style={{ animationDelay: "1.4s" }}
-      >
-        <span className="text-[0.65rem] tracking-widest uppercase text-cream/40">
-          Scroll
-        </span>
-        <div className="w-px h-12 bg-gradient-to-b from-accent/60 to-transparent animate-scroll-pulse"></div>
+
+        {/* Scroll indicator */}
+        <div
+          className="hidden md:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-2 opacity-0 animate-fade-in"
+          style={{ animationDelay: "1.4s" }}
+        >
+          <Text
+            as="span"
+            size="custom-0_65rem"
+            tracking="widest"
+            uppercase
+            color="cream-40"
+          >
+            Scroll
+          </Text>
+          <div className="w-px h-12 bg-gradient-to-b from-accent/60 to-transparent animate-scroll-pulse"></div>
+        </div>
       </div>
-      </div>
+
     </section>
   );
 }

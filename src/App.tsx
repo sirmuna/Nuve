@@ -1,25 +1,16 @@
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import Marquee from './components/Marquee';
-import Philosophy from './components/Philosophy';
-import Services from './components/Services';
-import Clients from './components/Clients';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
+import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { routeTree } from './routeTree.gen'
 
-function App() {
-  return (
-    <>
-      <Navbar />
-      <Hero />
-      <Marquee />
-      <Philosophy />
-      <Services />
-      <Clients />
-      <Contact />
-      <Footer />
-    </>
-  );
+const router = createRouter({ routeTree })
+
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router
+  }
 }
 
-export default App;
+const App = () => {
+  return <RouterProvider router={router} />
+}
+
+export default App
