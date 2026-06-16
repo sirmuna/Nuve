@@ -15,28 +15,72 @@ function Contact() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  const validateField = (name: string, value: string): string => {
+    switch (name) {
+      case "firstName":
+        if (!value.trim()) return "First name is required";
+        if (value.trim().length < 2) return "Must be at least 2 characters";
+        if (!/^[a-zA-Z\s'-]+$/.test(value.trim()))
+          return "Enter a valid first name";
+        return "";
+      case "lastName":
+        if (!value.trim()) return "Last name is required";
+        if (value.trim().length < 2) return "Must be at least 2 characters";
+        if (!/^[a-zA-Z\s'-]+$/.test(value.trim()))
+          return "Enter a valid last name";
+        return "";
+      case "email":
+        if (!value.trim()) return "Email is required";
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+          return "Enter a valid email address";
+        return "";
+      case "brand":
+        if (!value.trim()) return "Company/Brand name is required";
+        if (value.trim().length < 2) return "Must be at least 2 characters";
+        return "";
+      case "message":
+        if (!value.trim()) return "Please tell us about your project";
+        if (value.trim().length < 20)
+          return "Please provide more detail (at least 20 characters)";
+        return "";
+      default:
+        return "";
+    }
+  };
 
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
   ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-    if (errors[e.target.name]) {
-      setErrors({ ...errors, [e.target.name]: "" });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+    if (touched[name]) {
+      setErrors({ ...errors, [name]: validateField(name, value) });
     }
   };
 
+  const handleBlur = (
+    e: React.FocusEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
+    const { name, value } = e.target;
+    setTouched({ ...touched, [name]: true });
+    setErrors({ ...errors, [name]: validateField(name, value) });
+  };
+
   const validateForm = () => {
+    const allTouched: Record<string, boolean> = {};
     const newErrors: Record<string, string> = {};
-    if (!form.firstName.trim()) newErrors.firstName = "First name is required";
-    if (!form.lastName.trim()) newErrors.lastName = "Last name is required";
-    if (!form.email.trim()) newErrors.email = "Email is required";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email))
-      newErrors.email = "Please enter a valid email address";
-    if (!form.brand.trim()) newErrors.brand = "Company/Brand name is required";
-    if (!form.message.trim())
-      newErrors.message = "Please tell us about your project";
+    Object.keys(form).forEach((key) => {
+      allTouched[key] = true;
+      const err = validateField(key, form[key as keyof typeof form]);
+      if (err) newErrors[key] = err;
+    });
+    setTouched(allTouched);
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -49,11 +93,41 @@ function Contact() {
     }
   };
 
-  const inputClass = (field: string) =>
-    `w-full px-4 py-3 bg-cream border text-sm font-light text-ink outline-none transition-colors ${errors[field] ? "border-red-500 focus:border-red-500" : "border-warm focus:border-accent"}`;
+  const isValid = (field: string) => {
+    const requiredFields = [
+      "firstName",
+      "lastName",
+      "email",
+      "brand",
+      "message",
+    ];
+    if (!requiredFields.includes(field)) return false;
+    return (
+      touched[field] &&
+      !errors[field] &&
+      form[field as keyof typeof form].trim().length >=
+        (field === "message" ? 20 : 2)
+    );
+  };
+  const isInvalid = (field: string) => touched[field] && !!errors[field];
 
-  const selectClass =
-    "w-full px-4 py-3 pr-10 bg-cream border border-warm text-sm font-light text-ink outline-none focus:border-accent transition-colors appearance-none cursor-pointer";
+  const inputClass = (field: string) =>
+    `w-full px-4 py-3 bg-cream border text-sm font-light text-ink outline-none transition-all duration-200 ${
+      isInvalid(field)
+        ? "border-red-400 bg-red-50/30 focus:border-red-500"
+        : isValid(field)
+          ? "border-green-500 focus:border-green-500"
+          : "border-warm focus:border-accent"
+    }`;
+
+  const selectClass = (field: string) =>
+    `w-full px-4 py-3 pr-10 bg-cream border text-sm font-light text-ink outline-none transition-all duration-200 appearance-none cursor-pointer ${
+      isInvalid(field)
+        ? "border-red-400 bg-red-50/30 focus:border-red-500"
+        : isValid(field)
+          ? "border-green-500 focus:border-green-500"
+          : "border-warm focus:border-accent"
+    }`;
 
   const selectStyle = {
     backgroundImage:
@@ -62,19 +136,44 @@ function Contact() {
     backgroundPosition: "right 1rem center",
   };
 
-  const ErrorMsg = ({ field }: { field: string }) =>
-    errors[field] ? (
-      <p className="text-xs mt-1" style={{ color: "#ef4444" }}>
-        {errors[field]}
-      </p>
-    ) : null;
+  const FieldWrapper = ({
+    field,
+    children,
+  }: {
+    field: string;
+    children: React.ReactNode;
+  }) => (
+    <div className="flex flex-col gap-2">
+      {children}
+      {isInvalid(field) && (
+        <motion.p
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-xs text-red-500 flex items-center gap-1"
+        >
+          <span>✕</span> {errors[field]}
+        </motion.p>
+      )}
+      {isValid(field) && (
+        <motion.p
+          initial={{ opacity: 0, y: -4 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-xs text-green-600 flex items-center gap-1"
+        >
+          <span>✓</span> Looks good
+        </motion.p>
+      )}
+    </div>
+  );
 
   const Label = ({
     htmlFor,
     children,
+    required,
   }: {
     htmlFor: string;
     children: string;
+    required?: boolean;
   }) => (
     <Text
       as="label"
@@ -86,6 +185,7 @@ function Contact() {
       weight="medium"
     >
       {children}
+      {required && <span className="text-accent ml-1">*</span>}
     </Text>
   );
 
@@ -225,11 +325,12 @@ function Contact() {
       >
         {submitted ? (
           <motion.div
-            className="p-6 bg-accent/8 border border-accent/30 text-center"
+            className="p-8 border border-accent/30 text-center bg-accent/5"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4 }}
           >
+            <p className="text-2xl mb-3">✦</p>
             <Text
               as="p"
               font="serif"
@@ -248,11 +349,25 @@ function Contact() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.3 }}
+            noValidate
           >
-            {/* First + Last name row */}
+            <p
+              className="text-xs font-light tracking-wide"
+              style={{ color: "#7a7268" }}
+            >
+              Fields marked <span className="text-accent">*</span> are required.
+            </p>
+
+            {/* First + Last name */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
               <div className="flex flex-col gap-2">
-                <Label htmlFor="firstName">First Name</Label>
+                <label
+                  htmlFor="firstName"
+                  className="text-[0.65rem] tracking-widest uppercase font-medium"
+                  style={{ color: "#7a7268" }}
+                >
+                  First Name <span className="text-accent">*</span>
+                </label>
                 <input
                   id="firstName"
                   type="text"
@@ -261,12 +376,38 @@ function Contact() {
                   placeholder="Amara"
                   value={form.firstName}
                   onChange={handleChange}
+                  onBlur={handleBlur}
+                  tabIndex={1}
                   className={inputClass("firstName")}
                 />
-                <ErrorMsg field="firstName" />
+                {isInvalid("firstName") && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-xs text-red-500 flex items-center gap-1"
+                  >
+                    <span>✕</span> {errors.firstName}
+                  </motion.p>
+                )}
+                {isValid("firstName") && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-xs text-green-600 flex items-center gap-1"
+                  >
+                    <span>✓</span> Looks good
+                  </motion.p>
+                )}
               </div>
+
               <div className="flex flex-col gap-2">
-                <Label htmlFor="lastName">Last Name</Label>
+                <label
+                  htmlFor="lastName"
+                  className="text-[0.65rem] tracking-widest uppercase font-medium"
+                  style={{ color: "#7a7268" }}
+                >
+                  Last Name <span className="text-accent">*</span>
+                </label>
                 <input
                   id="lastName"
                   type="text"
@@ -275,15 +416,40 @@ function Contact() {
                   placeholder="Williams"
                   value={form.lastName}
                   onChange={handleChange}
+                  onBlur={handleBlur}
+                  tabIndex={2}
                   className={inputClass("lastName")}
                 />
-                <ErrorMsg field="lastName" />
+                {isInvalid("lastName") && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-xs text-red-500 flex items-center gap-1"
+                  >
+                    <span>✕</span> {errors.lastName}
+                  </motion.p>
+                )}
+                {isValid("lastName") && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-xs text-green-600 flex items-center gap-1"
+                  >
+                    <span>✓</span> Looks good
+                  </motion.p>
+                )}
               </div>
             </div>
 
             {/* Email */}
             <div className="flex flex-col gap-2">
-              <Label htmlFor="email">Email Address</Label>
+              <label
+                htmlFor="email"
+                className="text-[0.65rem] tracking-widest uppercase font-medium"
+                style={{ color: "#7a7268" }}
+              >
+                Email Address <span className="text-accent">*</span>
+              </label>
               <input
                 id="email"
                 type="email"
@@ -292,14 +458,39 @@ function Contact() {
                 placeholder="you@company.com"
                 value={form.email}
                 onChange={handleChange}
+                onBlur={handleBlur}
+                tabIndex={3}
                 className={inputClass("email")}
               />
-              <ErrorMsg field="email" />
+              {isInvalid("email") && (
+                <motion.p
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-xs text-red-500 flex items-center gap-1"
+                >
+                  <span>✕</span> {errors.email}
+                </motion.p>
+              )}
+              {isValid("email") && (
+                <motion.p
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-xs text-green-600 flex items-center gap-1"
+                >
+                  <span>✓</span> Looks good
+                </motion.p>
+              )}
             </div>
 
             {/* Brand */}
             <div className="flex flex-col gap-2">
-              <Label htmlFor="brand">Company / Brand</Label>
+              <label
+                htmlFor="brand"
+                className="text-[0.65rem] tracking-widest uppercase font-medium"
+                style={{ color: "#7a7268" }}
+              >
+                Company / Brand <span className="text-accent">*</span>
+              </label>
               <input
                 id="brand"
                 type="text"
@@ -308,21 +499,48 @@ function Contact() {
                 placeholder="Your brand name"
                 value={form.brand}
                 onChange={handleChange}
+                onBlur={handleBlur}
+                tabIndex={4}
                 className={inputClass("brand")}
               />
-              <ErrorMsg field="brand" />
+              {isInvalid("brand") && (
+                <motion.p
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-xs text-red-500 flex items-center gap-1"
+                >
+                  <span>✕</span> {errors.brand}
+                </motion.p>
+              )}
+              {isValid("brand") && (
+                <motion.p
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-xs text-green-600 flex items-center gap-1"
+                >
+                  <span>✓</span> Looks good
+                </motion.p>
+              )}
             </div>
 
             {/* Service */}
             <div className="flex flex-col gap-2">
-              <Label htmlFor="service">Service of Interest</Label>
+              <label
+                htmlFor="service"
+                className="text-[0.65rem] tracking-widest uppercase font-medium"
+                style={{ color: "#7a7268" }}
+              >
+                Service of Interest
+              </label>
               <select
                 id="service"
                 name="service"
                 autoComplete="off"
                 value={form.service}
                 onChange={handleChange}
-                className={selectClass}
+                onBlur={handleBlur}
+                tabIndex={5}
+                className={selectClass("service")}
                 style={selectStyle}
               >
                 <option value="">— Select a service —</option>
@@ -338,14 +556,22 @@ function Contact() {
 
             {/* Budget */}
             <div className="flex flex-col gap-2">
-              <Label htmlFor="budget">Estimated Budget</Label>
+              <label
+                htmlFor="budget"
+                className="text-[0.65rem] tracking-widest uppercase font-medium"
+                style={{ color: "#7a7268" }}
+              >
+                Estimated Budget
+              </label>
               <select
                 id="budget"
                 name="budget"
                 autoComplete="off"
                 value={form.budget}
                 onChange={handleChange}
-                className={selectClass}
+                onBlur={handleBlur}
+                tabIndex={6}
+                className={selectClass("budget")}
                 style={selectStyle}
               >
                 <option value="">— Select a range —</option>
@@ -358,7 +584,14 @@ function Contact() {
 
             {/* Message */}
             <div className="flex flex-col gap-2">
-              <Label htmlFor="message">Tell us about your project</Label>
+              <label
+                htmlFor="message"
+                className="text-[0.65rem] tracking-widest uppercase font-medium"
+                style={{ color: "#7a7268" }}
+              >
+                Tell us about your project{" "}
+                <span className="text-accent">*</span>
+              </label>
               <textarea
                 id="message"
                 name="message"
@@ -366,10 +599,38 @@ function Contact() {
                 placeholder="Describe what you're building, where you are now, and where you want to go..."
                 value={form.message}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 rows={5}
+                tabIndex={7}
                 className={inputClass("message") + " resize-y min-h-[130px]"}
               />
-              <ErrorMsg field="message" />
+              <div className="flex justify-between items-start">
+                <div>
+                  {isInvalid("message") && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-xs text-red-500 flex items-center gap-1"
+                    >
+                      <span>✕</span> {errors.message}
+                    </motion.p>
+                  )}
+                  {isValid("message") && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -4 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-xs text-green-600 flex items-center gap-1"
+                    >
+                      <span>✓</span> Looks good
+                    </motion.p>
+                  )}
+                </div>
+                <span
+                  className={`text-xs shrink-0 ${form.message.trim().length > 0 && form.message.trim().length < 20 ? "text-red-400" : "text-muted"}`}
+                >
+                  {form.message.trim().length} / 20 min
+                </span>
+              </div>
             </div>
 
             <Text
@@ -382,7 +643,8 @@ function Contact() {
               We respond to all enquiries within 48 hours. Your information is
               never shared with third parties.
             </Text>
-            <Button type="submit" size="lg" className="self-start">
+
+            <Button type="submit" size="lg" className="self-start" tabIndex={8}>
               Send Enquiry
             </Button>
           </motion.form>
