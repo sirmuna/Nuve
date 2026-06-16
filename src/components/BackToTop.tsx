@@ -63,7 +63,7 @@ function BackToTop() {
             scale: 0.9,
           }}
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 w-14 h-14 bg-accent text-cream rounded-full flex items-center justify-center shadow-xl"
+          className="fixed bottom-8 right-8 z-49 w-14 h-14 bg-accent text-cream rounded-full flex items-center justify-center shadow-xl"
           aria-label="Back to top"
         >
           {/* Animated Glow Ring */}
@@ -95,7 +95,7 @@ function BackToTop() {
             viewBox="0 0 24 24"
             strokeWidth={2.5}
             stroke="currentColor"
-            className="w-6 h-6 relative z-10"
+            className="w-6 h-6 relative z-49"
           >
             <path
               strokeLinecap="round"

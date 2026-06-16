@@ -1,5 +1,4 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
-
 import { AnimatePresence } from "framer-motion";
 import Navbar from "../components/Navbar";
 import BackToTop from "../components/BackToTop";
