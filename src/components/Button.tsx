@@ -13,6 +13,7 @@ interface ButtonProps {
   disabled?: boolean;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   type?: "button" | "submit" | "reset";
+  tabIndex?: number;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -71,6 +72,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={props.disabled}
       onClick={props.onClick}
       type={props.type}
+      tabIndex={props.tabIndex}
     >
       {children}
     </motion.button>

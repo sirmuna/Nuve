@@ -81,6 +81,7 @@ interface TextProps extends React.HTMLAttributes<HTMLElement> {
   tracking?: Tracking;
   leading?: Leading;
   href?: string;
+  htmlFor?: string;
 }
 
 const Text: React.FC<TextProps> = ({
